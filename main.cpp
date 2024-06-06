@@ -35,7 +35,7 @@ void AddToList(List** head) {
 #ifdef __linux__
 	printf("Enter price: ");
 	scanf("%f", &price);
-	printf("Enter motor spin speed: ");
+	printf("Enter maximum spin speed: ");
 	scanf("%f", &mss);
 	printf("Enter model: ");
 	scanf("%s", model);
@@ -44,7 +44,7 @@ void AddToList(List** head) {
 #else
 	printf("Enter price: ");
 	scanf_s("%f", &price);
-	printf("Enter motor spin speed: ");
+	printf("Enter maximum spin speed: ");
 	scanf_s("%f", &mss);
 	getchar();
 	printf("Enter model: ");

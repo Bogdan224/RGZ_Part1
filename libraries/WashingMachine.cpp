@@ -16,7 +16,7 @@ void Init(WashingMachine* wm, float price, float mss, const char* model, const c
 
 //A.3
 void Print(WashingMachine* wm) {
-   printf("Price: %f\nMotor spin speed: %f\nModel: %s\nFirm: %s\n", wm->price, wm->mss, wm->model, wm->firm);
+   printf("Price: %f\nMaximum spin speed: %f\nModel: %s\nFirm: %s\n", wm->price, wm->mss, wm->model, wm->firm);
 }
 //A.4
 bool Equals(WashingMachine* wm1, WashingMachine* wm2){
