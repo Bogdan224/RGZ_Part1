@@ -176,10 +176,10 @@ List* ReadFromFile() {
 
 void Part1_A() {
 	WashingMachine wm1, wm2, wm3, wm4;
-	Init(&wm1, 20, 8, "AMD", "Linux");
-	Init(&wm2, 16, 4, "AMD", "MacOS");
-	Init(&wm3, 24, 16, "Intel", "Windows");
-	Init(&wm4, 20, 8, "AMD", "Linux");
+	Init(&wm1, 300, 1800, "AM-211", "LG");
+	Init(&wm2, 250, 1400, "SKV-536", "Sony");
+	Init(&wm3, 400, 1600, "M-10", "Xiaomi");
+	Init(&wm4, 200, 1200, "PN-318", "Panasonic");
 
 	Print(&wm1);
 	Print(&wm2);
