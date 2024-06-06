@@ -28,33 +28,33 @@ void clear_screen()
 //Part1_B
 void AddToList(List** head) {
 	clear_screen();
-	PersonalComputer* pc = (PersonalComputer*)malloc(sizeof(PersonalComputer));
-	float displaySize, ram;
-	char* cpu = (char*)malloc(N), * os = (char*)malloc(N);
+	WashingMachine* wm = (WashingMachine*)malloc(sizeof(WashingMachine));
+	float price, mss;
+	char* model = (char*)malloc(N), * firm = (char*)malloc(N);
 	
 #ifdef __linux__
-	printf("Enter display size(inch): ");
-	scanf("%f", &displaySize);
-	printf("Enter size of RAM(gb): ");
-	scanf("%f", &ram);
-	printf("Enter name of CPU: ");
-	scanf("%s", cpu);
-	printf("Enter name of OS: ");
-	scanf("%s", os);
+	printf("Enter price: ");
+	scanf("%f", &price);
+	printf("Enter motor spin speed: ");
+	scanf("%f", &mss);
+	printf("Enter model: ");
+	scanf("%s", model);
+	printf("Enter firm: ");
+	scanf("%s", firm);
 #else
-	printf("Enter display size(inch): ");
-	scanf_s("%f", &displaySize);
-	printf("Enter size of RAM(gb): ");
-	scanf_s("%f", &ram);
+	printf("Enter price: ");
+	scanf_s("%f", &price);
+	printf("Enter motor spin speed: ");
+	scanf_s("%f", &mss);
 	getchar();
-	printf("Enter name of CPU: ");
-	gets_s(cpu, N);
-	printf("Enter name of OS: ");
-	gets_s(os, N);
+	printf("Enter model: ");
+	gets_s(model, N);
+	printf("Enter firm: ");
+	gets_s(firm, N);
 #endif
 	printf("\n");
-	Init(pc, displaySize, ram, cpu, os);
-	Push_back(pc, head);
+	Init(wm, price, mss, model, firm);
+	Push_back(wm, head);
 }
 //Part1_B
 void PrintList(List* head) {
@@ -74,7 +74,7 @@ void DeleteFromList(List** head) {
 	if(*head == NULL){
 		return;
 	}
-	printf("Enter index of pc you want to delete: ");
+	printf("Enter index of wm you want to delete: ");
 	int pos;
 #ifdef __linux__
 	scanf("%d", &pos);
@@ -100,10 +100,10 @@ void WriteToFile(List* head) {
 		return;
 	}
 	while (head != NULL) {
-		int cnt = write(fd, &head->pc->displaySize, sizeof(head->pc->displaySize));
-		cnt = write(fd, &head->pc->ram, sizeof(head->pc->ram));
-		cnt = write(fd, &head->pc->cpu, sizeof(head->pc->cpu));
-		cnt = write(fd, &head->pc->os, sizeof(head->pc->os));
+		int cnt = write(fd, &head->wm->price, sizeof(head->wm->price));
+		cnt = write(fd, &head->wm->mss, sizeof(head->wm->mss));
+		cnt = write(fd, &head->wm->model, sizeof(head->wm->model));
+		cnt = write(fd, &head->wm->firm, sizeof(head->wm->firm));
 		head = head->next;
 	}
 	
@@ -114,10 +114,10 @@ void WriteToFile(List* head) {
 		return;
 	}
 	while (head != NULL) {
-		int cnt = _write(fd, &head->pc->displaySize, sizeof(head->pc->displaySize));
-		cnt = _write(fd, &head->pc->ram, sizeof(head->pc->ram));
-		cnt = _write(fd, &head->pc->cpu, sizeof(head->pc->cpu));
-		cnt = _write(fd, &head->pc->os, sizeof(head->pc->os));
+		int cnt = _write(fd, &head->wm->price, sizeof(head->wm->price));
+		cnt = _write(fd, &head->wm->mss, sizeof(head->wm->mss));
+		cnt = _write(fd, &head->wm->model, sizeof(head->wm->model));
+		cnt = _write(fd, &head->wm->firm, sizeof(head->wm->firm));
 		head = head->next;
 	}
 #endif
@@ -134,19 +134,19 @@ List* ReadFromFile() {
 	}
 	List* head = NULL;
 	while (true) {
-		PersonalComputer* pc = (PersonalComputer*)malloc(sizeof(PersonalComputer));
-		float displaySize, ram;	
-		int cnt = read(fd, &displaySize, sizeof(displaySize));
+		WashingMachine* wm = (WashingMachine*)malloc(sizeof(WashingMachine));
+		float price, mss;	
+		int cnt = read(fd, &price, sizeof(price));
 		if (cnt == 0) {
 			return head;
 		}
-		cnt = read(fd, &ram, sizeof(ram));
-		char cpu[N], os[N];
-		cnt = read(fd, &cpu, N);
-		cnt = read(fd, &os, N);
+		cnt = read(fd, &mss, sizeof(mss));
+		char model[N], firm[N];
+		cnt = read(fd, &model, N);
+		cnt = read(fd, &firm, N);
 		
-		Init(pc, displaySize, ram, cpu, os);
-		Push_back(pc, &head);
+		Init(wm, price, mss, model, firm);
+		Push_back(wm, &head);
 	}
 #else
 	int fd = _open(pathname, O_RDONLY, S_IREAD);
@@ -156,18 +156,18 @@ List* ReadFromFile() {
 	}
 	List* head = NULL;
 	while (true) {
-		PersonalComputer* pc = (PersonalComputer*)malloc(sizeof(PersonalComputer));
-		float displaySize, ram;	
-		int cnt = _read(fd, &displaySize, sizeof(displaySize));
-		cnt = _read(fd, &ram, sizeof(ram));
-		char cpu[20], os[20];
-		cnt = _read(fd, &cpu, 20);
-		cnt = _read(fd, &os, 20);
+		WashingMachine* wm = (WashingMachine*)malloc(sizeof(WashingMachine));
+		float price, mss;	
+		int cnt = _read(fd, &price, sizeof(price));
+		cnt = _read(fd, &mss, sizeof(mss));
+		char model[20], firm[20];
+		cnt = _read(fd, &model, 20);
+		cnt = _read(fd, &firm, 20);
 		if (cnt == 0) {
 			return head;
 		}
-		Init(pc, displaySize, ram, cpu, os);
-		Push_back(pc, &head);
+		Init(wm, price, mss, model, firm);
+		Push_back(wm, &head);
 	}
 #endif
 	close(fd);
@@ -175,30 +175,30 @@ List* ReadFromFile() {
 }
 
 void Part1_A() {
-	PersonalComputer pc1, pc2, pc3, pc4;
-	Init(&pc1, 20, 8, "AMD", "Linux");
-	Init(&pc2, 16, 4, "AMD", "MacOS");
-	Init(&pc3, 24, 16, "Intel", "Windows");
-	Init(&pc4, 20, 8, "AMD", "Linux");
+	WashingMachine wm1, wm2, wm3, wm4;
+	Init(&wm1, 20, 8, "AMD", "Linux");
+	Init(&wm2, 16, 4, "AMD", "MacOS");
+	Init(&wm3, 24, 16, "Intel", "Windows");
+	Init(&wm4, 20, 8, "AMD", "Linux");
 
-	Print(&pc1);
-	Print(&pc2);
-	Print(&pc3);
-	Print(&pc4);
+	Print(&wm1);
+	Print(&wm2);
+	Print(&wm3);
+	Print(&wm4);
 
-	if (Equals(&pc1, &pc4)) {
+	if (Equals(&wm1, &wm4)) {
 		printf("Equals!\n");
 	}
 
-	if (Less(&pc2, &pc3)) {
+	if (Less(&wm2, &wm3)) {
 		printf("Less!\n");
 	}
 
 	List* head = NULL;
-	Push_back(&pc1, &head);
-	Push_back(&pc2, &head);
-	Push_back(&pc3, &head);
-	//Push_back(&pc3, &head);
+	Push_back(&wm1, &head);
+	Push_back(&wm2, &head);
+	Push_back(&wm3, &head);
+	// Push_back(&wm4, &head);
 
 	printf("%d\n", Size(head));
 	DeleteByPos(&head, 1);
@@ -206,10 +206,40 @@ void Part1_A() {
 }
 
 void Part1_B() {
+	List* head = NULL;
+	while (true) {
+		//clear_screen();
+		printf("1)Add washing machine to list\n2)Print list\n3)Delete from list by index\n0)Exit\nEnter your choiсe -> ");
+		int choice;
+		scanf("%d", &choice);
+		switch (choice)
+		{
+		case 1:
+			AddToList(&head);
+			break;
+		case 2:
+			PrintList(head);
+			break;
+		case 3:
+			DeleteFromList(&head);
+			break;
+		case 0:
+			return;
+		default:
+			break;
+		}
+#ifdef _WIN32
+		system("pause");
+#endif
+	}
+}
+
+
+void Part1_C() {
 	List* head = ReadFromFile();
 	while (true) {
 		//clear_screen();
-		printf("1)Add pc to list\n2)Print list\n3)Delete from list by index\n0)Exit\nEnter your choiсe -> ");
+		printf("1)Add washing machine to list\n2)Print list\n3)Delete from list by index\n0)Exit\nEnter your choiсe -> ");
 		int choice;
 		scanf("%d", &choice);
 		switch (choice)
@@ -231,14 +261,12 @@ void Part1_B() {
 		}
 #ifdef _WIN32
 		system("pause");
-#else
-		getc(stdin);
 #endif
 	}
 }
 
 int main(int, char**) {
-	
 	//Part1_A();
-	Part1_B();
+	//Part1_B();
+	Part1_C();
 }

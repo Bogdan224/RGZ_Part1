@@ -1,18 +1,18 @@
 #pragma once
-#include "PersonalComputer.h"
+#include "WashingMachine.h"
 #include <stdlib.h>
 struct List
 {
-    PersonalComputer* pc;
+    WashingMachine* wm;
     List* next;
 };
 
 //B.2
-void Push_back(PersonalComputer* pc, List** head);
+void Push_back(WashingMachine* wm, List** head);
 //B.3
 int Size(List* head);
 //B.4
 int DeleteByPos(List** head, int pos);
 //B.5
-PersonalComputer* GetElementByPos(List* head, int pos);
+WashingMachine* GetElementByPos(List* head, int pos);
 

@@ -1,12 +1,12 @@
 #include "List.h"
-void Push_back(PersonalComputer* pc, List** head) {
+void Push_back(WashingMachine* wm, List** head) {
     if (*head == NULL) {
         *head = (List*)malloc(sizeof(List));
-        (*head)->pc = pc;
+        (*head)->wm = wm;
         (*head)->next = NULL;
         return;
     }
-    Push_back(pc, &(*head)->next);
+    Push_back(wm, &(*head)->next);
 }
 
 //B.3
@@ -26,7 +26,7 @@ int DeleteByPos(List** head, int pos) {
         return 1;
     if (pos == 0) {
         List* next = (*head)->next;
-        free((*head)->pc);
+        free((*head)->wm);
         free((*head));
         *head = next;
         return 0;
@@ -46,12 +46,12 @@ int DeleteByPos(List** head, int pos) {
         return 1;
     }
     pred->next = tmp->next;
-    free(tmp->pc);
+    free(tmp->wm);
     free(tmp);
     return 0;
 }
 //B.5
-PersonalComputer* GetElementByPos(List* head, int pos) {
+WashingMachine* GetElementByPos(List* head, int pos) {
     if (pos < 0) {
         return NULL;
     }
@@ -64,6 +64,6 @@ PersonalComputer* GetElementByPos(List* head, int pos) {
         }
         head = head->next;
     }
-    return head->pc;
+    return head->wm;
 }
 
