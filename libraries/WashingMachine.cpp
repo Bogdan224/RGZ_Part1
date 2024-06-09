@@ -36,9 +36,9 @@ bool Less(WashingMachine* wm1, WashingMachine* wm2){
         return false;
     if (wm1->mss >= wm2->mss)
         return false;
-    if (strcmp(wm1->model, wm2->model) != -1)
+    if (strcmp(wm1->model, wm2->model) > -1)
         return false;
-    if (strcmp(wm1->firm, wm2->firm) != -1)
+    if (strcmp(wm1->firm, wm2->firm) > -1)
         return false;
     return true;
 }

@@ -9,6 +9,8 @@ struct List
 
 //B.2
 void Push_back(WashingMachine* wm, List** head);
+List* Push_front(WashingMachine* wm, List* head);
+List* Push(WashingMachine* wm, List* head);
 //B.3
 int Size(List* head);
 //B.4

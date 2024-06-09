@@ -54,7 +54,7 @@ void AddToList(List** head) {
 #endif
 	printf("\n");
 	Init(wm, price, mss, model, firm);
-	Push_back(wm, head);
+	*head = Push(wm, *head);
 }
 //Part1_B
 void PrintList(List* head) {
